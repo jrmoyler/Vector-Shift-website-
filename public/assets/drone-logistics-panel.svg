@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-label="Vector Shift mission command dashboard and drone route assets">
+  <defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#071225"/><stop offset="1" stop-color="#0D1E38"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <rect width="960" height="540" rx="28" fill="url(#bg)"/><g stroke="#CBD5E1" stroke-opacity=".12"><path d="M80 70h820M80 150h820M80 230h820M80 310h820M80 390h820M80 470h820M120 40v460M280 40v460M440 40v460M600 40v460M760 40v460"/></g>
+  <g fill="none" stroke="#75B8FF" stroke-width="4" filter="url(#glow)"><path d="M96 384C190 300 248 347 327 265s156-74 232-20 139 26 248-96"/><path d="M172 245c60-52 120-69 188-46 56 19 92 0 144-47" stroke-opacity=".45"/></g>
+  <g fill="#E2E8F0"><circle cx="96" cy="384" r="9"/><circle cx="327" cy="265" r="9"/><circle cx="559" cy="245" r="9"/><circle cx="807" cy="149" r="9"/></g>
+  <g transform="translate(620 92)" fill="none" stroke="#CBD5E1" stroke-linecap="round" stroke-width="10"><path d="M30 70h160M110 20v100M55 45l-48-32M165 45l48-32M55 95l-48 32M165 95l48 32"/><circle cx="0" cy="8" r="22"/><circle cx="220" cy="8" r="22"/><circle cx="0" cy="132" r="22"/><circle cx="220" cy="132" r="22"/><rect x="82" y="47" width="56" height="46" rx="10" fill="#071225"/></g>
+  <g fill="#CBD5E1" font-family="JetBrains Mono, monospace" font-size="24"><text x="54" y="68">ROUTE VEC-7A</text><text x="54" y="504">ETA 07:24  •  PAYLOAD MEDICAL SUPPLIES  •  STATUS EN ROUTE</text></g>
+</svg>
