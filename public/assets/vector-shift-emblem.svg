@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">Vector Shift eagle VS emblem</title>
+  <desc id="desc">A silver and navy eagle wrapped around a circuit-styled VS monogram with motion fragments.</desc>
+  <defs>
+    <linearGradient id="silver" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff"/><stop offset=".35" stop-color="#CBD5E1"/><stop offset=".7" stop-color="#6B7F99"/><stop offset="1" stop-color="#F8FAFC"/></linearGradient>
+    <linearGradient id="navy" x1="0" x2="1"><stop stop-color="#071225"/><stop offset="1" stop-color="#0F1F36"/></linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8" result="b"/><feColorMatrix in="b" values="0 0 0 0 .55 0 0 0 0 .75 0 0 0 0 1 0 0 0 .7 0"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="shadow"><feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#020713" flood-opacity=".75"/></filter>
+  </defs>
+  <g filter="url(#glow)"><ellipse cx="318" cy="206" rx="210" ry="118" fill="#9CCBFF" opacity=".08"/></g>
+  <g filter="url(#shadow)" stroke="#03091A" stroke-width="8" stroke-linejoin="round">
+    <path fill="url(#navy)" d="M52 78c72 70 136 69 168 91 25 18 32 47 24 86L120 324 70 176 9 112c44 18 83 24 126 19C103 119 76 102 52 78z"/>
+    <path fill="url(#silver)" d="M61 70c68 69 129 70 163 94-57-13-100-29-150-70 39 53 93 79 155 100-70-9-123-34-178-74 35 55 84 88 161 116-64-5-114-23-165-58 31 55 75 88 136 110l-65 36L67 175 5 111c43 19 83 25 129 20C102 119 75 98 61 70z"/>
+    <path fill="url(#navy)" d="M588 78c-72 70-136 69-168 91-25 18-32 47-24 86l124 69 50-148 61-64c-44 18-83 24-126 19 32-12 59-29 83-53z"/>
+    <path fill="url(#silver)" d="M579 70c-68 69-129 70-163 94 57-13 100-29 150-70-39 53-93 79-155 100 70-9 123-34 178-74-35 55-84 88-161 116 64-5 114-23 165-58-31 55-75 88-136 110l65 36 51-149 62-64c-43 19-83 25-129 20 32-12 59-33 73-61z"/>
+    <path fill="url(#silver)" d="M301 134c34-39 90-30 113 8-37-12-66-4-84 23 34-16 69-15 93 14-38-2-68 7-92 32-22 22-45 28-67 20-32-12-44-46-28-72 12-19 34-29 65-25z"/>
+    <path fill="#09162B" d="M337 150c26-11 50-10 74 1-21 2-39 9-55 23l47 7c-38 9-65 24-82 47-26 11-54-3-58-27-5-28 30-50 74-51z"/>
+    <circle cx="355" cy="161" r="7" fill="#071225" stroke="#F8FAFC" stroke-width="4"/>
+    <path fill="url(#silver)" d="M372 160l49-10-42 27z"/>
+  </g>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#shadow)">
+    <path d="M150 131l72 210h52l40-96 43 96h53l70-210" stroke="#071225" stroke-width="48"/>
+    <path d="M150 131l72 210h52l40-96 43 96h53l70-210" stroke="#12284A" stroke-width="28"/>
+    <path d="M170 149l66 170h23l55-130 57 130h25l64-170" stroke="url(#silver)" stroke-width="12"/>
+    <path d="M209 192v61m219-61v61M244 316h30m92 0h30" stroke="#CBD5E1" stroke-width="5" opacity=".9"/>
+    <circle cx="209" cy="192" r="7" fill="#CBD5E1" stroke="#071225" stroke-width="4"/><circle cx="428" cy="192" r="7" fill="#CBD5E1" stroke="#071225" stroke-width="4"/>
+  </g>
+  <g fill="#E2E8F0" opacity=".88">
+    <path d="M502 104l17-7-8 16z"/><path d="M530 122l25-10-12 23z"/><path d="M494 148l20-8-10 18z"/><path d="M535 165l34-13-16 31z"/><path d="M496 202l23-8-10 21z"/><path d="M456 88l12-5-5 12z"/>
+  </g>
+</svg>
