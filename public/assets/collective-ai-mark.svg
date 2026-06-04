@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 80" role="img" aria-label="Collective AI Inc. parent company logo">
+  <defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#fff"/><stop offset=".5" stop-color="#CBD5E1"/><stop offset="1" stop-color="#8191A6"/></linearGradient></defs>
+  <g fill="url(#g)">
+    <path d="M35 3c7 20 15 30 35 37-20 7-28 17-35 37C28 57 20 47 0 40 20 33 28 23 35 3z"/>
+    <path d="M35 22c4 9 9 14 18 18-9 4-14 9-18 18-4-9-9-14-18-18 9-4 14-9 18-18z" fill="#071225" opacity=".9"/>
+  </g>
+  <text x="88" y="34" fill="#F8FAFC" font-family="Arial Black, Space Grotesk, sans-serif" font-size="24" font-weight="900" letter-spacing="3">COLLECTIVE AI</text>
+  <text x="88" y="59" fill="#CBD5E1" font-family="Arial Black, Space Grotesk, sans-serif" font-size="20" font-weight="900" letter-spacing="3">INC.</text>
+</svg>

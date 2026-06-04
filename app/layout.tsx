@@ -7,6 +7,14 @@ export const metadata: Metadata = {
   description:
     'Move everything. Ground and sky. Autonomous logistics and aerial mobility platform built for scale, resilience, and operational superiority. A division of Collective AI Inc.',
   keywords: ['autonomous logistics', 'aerial mobility', 'drone delivery', 'fleet routing', 'Vector Shift'],
+  icons: {
+    icon: '/assets/vector-shift-emblem.svg',
+  },
+  openGraph: {
+    title: 'Vector Shift — Autonomous Logistics & Aerial Mobility',
+    description: 'A Collective AI Inc. division for autonomous logistics, aerial mobility, fleet routing, and mission command.',
+    images: ['/assets/drone-logistics-panel.svg'],
+  },
 }
 
 export default function RootLayout({
