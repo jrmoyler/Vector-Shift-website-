@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 180" role="img" aria-label="Vector Shift wordmark with eagle emblem">
+  <defs>
+    <linearGradient id="metal" x1="0" x2="1"><stop stop-color="#FFFFFF"/><stop offset=".22" stop-color="#CBD5E1"/><stop offset=".45" stop-color="#4B5D73"/><stop offset=".65" stop-color="#F8FAFC"/><stop offset="1" stop-color="#8EA0B5"/></linearGradient>
+    <linearGradient id="blue" x1="0" x2="1"><stop stop-color="#07152A"/><stop offset="1" stop-color="#173B70"/></linearGradient>
+    <filter id="s"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000814" flood-opacity=".8"/></filter>
+  </defs>
+  <g filter="url(#s)">
+    <text x="0" y="112" fill="#071B45" font-family="Arial Black, Space Grotesk, sans-serif" font-size="70" font-weight="900" letter-spacing="3">VECTOR</text>
+    <g transform="translate(340 34)">
+      <path d="M60 0l49 52-20 19-29-31-29 31-20-19z" fill="url(#metal)"/>
+      <path d="M60 42l40 42-20 19-20-22-20 22-20-19z" fill="url(#blue)"/>
+      <path d="M60 0v103" stroke="#FFFFFF" stroke-opacity=".35" stroke-width="3"/>
+    </g>
+    <text x="472" y="112" fill="url(#metal)" font-family="Arial Black, Space Grotesk, sans-serif" font-size="70" font-style="italic" font-weight="900" letter-spacing="2">SHIFT</text>
+    <g fill="#E2E8F0" opacity=".9" transform="translate(735 36)"><path d="M0 38l18-7-8 17z"/><path d="M26 22l25-10-12 23z"/><path d="M35 58l34-13-16 31z"/><path d="M-10 73l22-8-9 20z"/></g>
+    <text x="348" y="153" text-anchor="middle" fill="#CBD5E1" font-family="JetBrains Mono, monospace" font-size="16" letter-spacing="5">A DIVISION OF COLLECTIVE AI INC.</text>
+  </g>
+</svg>

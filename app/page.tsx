@@ -23,41 +23,42 @@ import {
   Target,
 } from 'lucide-react'
 
-// ─── Logo ───────────────────────────────────────────────────────────────────
+// ─── Brand Assets ────────────────────────────────────────────────────────────
+
+const brandAssets = {
+  emblem: '/assets/vector-shift-emblem.svg',
+  lockup: '/assets/vector-shift-lockup.svg',
+  collective: '/assets/collective-ai-mark.svg',
+  missionPanel: '/assets/drone-logistics-panel.svg',
+}
 
 function VectorShiftLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
-  const scale = size === 'sm' ? 0.7 : size === 'lg' ? 1.3 : 1
+  const dimensions = {
+    sm: { width: 198, className: 'h-11' },
+    md: { width: 294, className: 'h-16' },
+    lg: { width: 420, className: 'h-24 md:h-28' },
+  }[size]
+
   return (
-    <div className="flex items-center gap-3" style={{ transform: `scale(${scale})`, transformOrigin: 'left center' }}>
-      {/* Eagle + VS mark */}
-      <div className="relative">
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-          {/* Wing left */}
-          <path d="M2 20 Q8 10 16 18 Q10 16 6 22Z" fill="#CBD5E1" opacity="0.9" />
-          {/* Wing right */}
-          <path d="M38 20 Q32 10 24 18 Q30 16 34 22Z" fill="#CBD5E1" opacity="0.9" />
-          {/* Body */}
-          <ellipse cx="20" cy="20" rx="8" ry="10" fill="#CBD5E1" opacity="0.15" />
-          {/* VS monogram */}
-          <text x="20" y="24" textAnchor="middle" fill="#CBD5E1" fontSize="11" fontWeight="700" fontFamily="Space Grotesk">VS</text>
-          {/* Eagle head */}
-          <circle cx="20" cy="10" r="4" fill="#CBD5E1" opacity="0.9" />
-          <path d="M22 10 L25 9 L23 11Z" fill="#CBD5E1" />
-          {/* Tail feathers */}
-          <path d="M16 28 L20 32 L24 28" stroke="#CBD5E1" strokeWidth="1.5" fill="none" opacity="0.7" />
-          {/* Collective AI diamond star ✦ */}
-          <text x="35" y="38" textAnchor="middle" fill="#CBD5E1" fontSize="8" opacity="0.8">✦</text>
-        </svg>
-      </div>
-      <div className="flex flex-col">
-        <span className="text-silver font-grotesk font-bold text-lg leading-none tracking-wider">
-          VECTOR SHIFT
-        </span>
-        <span className="text-text-secondary font-mono text-[10px] tracking-[0.2em] uppercase leading-tight">
-          Autonomous Logistics / Aerial Mobility
-        </span>
-      </div>
-    </div>
+    <img
+      src={brandAssets.lockup}
+      alt="Vector Shift, a division of Collective AI Inc."
+      width={dimensions.width}
+      height={Math.round(dimensions.width / 4.55)}
+      className={`${dimensions.className} w-auto drop-shadow-[0_10px_24px_rgba(0,8,20,0.75)]`}
+    />
+  )
+}
+
+function CollectiveAILogo() {
+  return (
+    <img
+      src={brandAssets.collective}
+      alt="Collective AI Inc."
+      width={220}
+      height={63}
+      className="h-12 w-auto opacity-95"
+    />
   )
 }
 
@@ -172,59 +173,102 @@ function Hero() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 pt-24 pb-16">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Division badge */}
-          <div className="inline-flex items-center gap-2 mb-8">
-            <span className="badge-vs">A Division of Collective AI Inc. ✦</span>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 pt-28 pb-16">
+        <div className="mb-10 flex items-center justify-between gap-8 border-y border-silver/20 py-5">
+          <div className="hidden md:block">
+            <VectorShiftLogo size="md" />
+          </div>
+          <div className="font-mono text-xs md:text-sm uppercase tracking-[0.35em] text-silver-light">
+            Autonomous Logistics / Aerial Mobility
+          </div>
+          <div className="hidden md:block">
+            <CollectiveAILogo />
+          </div>
+        </div>
+
+        <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+          <div>
+            <div className="badge-vs mb-6">A Division of Collective AI Inc. ✦</div>
+
+            <h1 className="font-grotesk font-bold text-5xl md:text-7xl lg:text-8xl text-text-primary leading-[1.05] tracking-tight mb-6">
+              Move everything.
+              <br />
+              <span className="text-silver">Ground and sky.</span>
+            </h1>
+
+            <p className="text-text-secondary text-lg md:text-xl max-w-2xl leading-relaxed mb-10">
+              Autonomous logistics and aerial mobility platform built for scale,
+              resilience, and operational superiority. The production brand system,
+              Vector Shift lockup, Collective AI parent mark, and mission UI assets
+              are embedded directly in the app for Vercel deployment.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-start gap-4">
+              <button className="btn-primary text-base px-8 py-3 gap-2">
+                <Zap size={16} strokeWidth={1.5} />
+                Launch Mission
+              </button>
+              <button className="btn-ghost text-base px-8 py-3 gap-2">
+                <Map size={16} strokeWidth={1.5} />
+                View Fleet Routing
+              </button>
+            </div>
           </div>
 
-          {/* Headline */}
-          <h1 className="font-grotesk font-bold text-5xl md:text-7xl lg:text-8xl text-text-primary leading-[1.05] tracking-tight mb-6">
-            Move everything.
-            <br />
-            <span className="text-silver">Ground and sky.</span>
-          </h1>
-
-          {/* Subheadline */}
-          <p className="text-text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
-            Autonomous logistics and aerial mobility platform built for scale,
-            resilience, and operational superiority.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="btn-primary text-base px-8 py-3 gap-2">
-              <Zap size={16} strokeWidth={1.5} />
-              Launch Mission
-            </button>
-            <button className="btn-ghost text-base px-8 py-3 gap-2">
-              <Map size={16} strokeWidth={1.5} />
-              View Fleet Routing
-            </button>
-          </div>
-
-          {/* Stat strip */}
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-px bg-border-dark rounded-card overflow-hidden border border-border-dark">
-            {[
-              { label: 'Active Missions', value: '86', unit: '' },
-              { label: 'Deliveries Today', value: '1,248', unit: '' },
-              { label: 'Route Efficiency', value: '93.6', unit: '%' },
-              { label: 'Fleet Units Online', value: '214', unit: '' },
-            ].map(({ label, value, unit }) => (
-              <div key={label} className="bg-surface/60 px-6 py-5 text-center">
-                <div className="font-mono text-2xl font-semibold text-silver">
-                  {value}
-                  <span className="text-sm text-text-secondary ml-1">{unit}</span>
-                </div>
-                <div className="text-text-secondary text-xs mt-1 tracking-wide uppercase">{label}</div>
+          <div className="brand-showcase card-vs scanline p-5 md:p-7">
+            <div className="flex items-start justify-between gap-4 border-b border-silver/15 pb-4">
+              <div>
+                <div className="font-mono text-[11px] uppercase tracking-[0.28em] text-text-secondary">01 / Identity System</div>
+                <div className="mt-2 text-sm text-silver">Primary lockup + emblem treatment</div>
               </div>
-            ))}
+              <CollectiveAILogo />
+            </div>
+            <div className="grid gap-5 pt-5 md:grid-cols-[0.9fr_1.1fr]">
+              <div className="rounded-card border border-silver/15 bg-black/10 p-4">
+                <img
+                  src={brandAssets.emblem}
+                  alt="Vector Shift eagle VS emblem"
+                  width={640}
+                  height={420}
+                  className="mx-auto h-48 w-full object-contain md:h-60"
+                />
+                <div className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary">Icon emphasis</div>
+              </div>
+              <div className="space-y-5">
+                <div className="rounded-card border border-silver/15 bg-[#071225]/80 p-4">
+                  <VectorShiftLogo size="lg" />
+                  <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary">Wordmark treatment</div>
+                </div>
+                <img
+                  src={brandAssets.missionPanel}
+                  alt="Vector Shift mission route dashboard asset"
+                  width={960}
+                  height={540}
+                  className="rounded-card border border-silver/15 shadow-2xl shadow-black/30"
+                />
+              </div>
+            </div>
           </div>
+        </div>
+
+        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-px bg-border-dark rounded-card overflow-hidden border border-border-dark">
+          {[
+            { label: 'Active Missions', value: '86', unit: '' },
+            { label: 'Deliveries Today', value: '1,248', unit: '' },
+            { label: 'Route Efficiency', value: '93.6', unit: '%' },
+            { label: 'Fleet Units Online', value: '214', unit: '' },
+          ].map(({ label, value, unit }) => (
+            <div key={label} className="bg-surface/60 px-6 py-5 text-center">
+              <div className="font-mono text-2xl font-semibold text-silver">
+                {value}
+                <span className="text-sm text-text-secondary ml-1">{unit}</span>
+              </div>
+              <div className="text-text-secondary text-xs mt-1 tracking-wide uppercase">{label}</div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Bottom fade */}
       <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-void to-transparent pointer-events-none" />
     </section>
   )
