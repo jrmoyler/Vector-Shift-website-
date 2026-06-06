@@ -23,6 +23,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 72px; /* height of fixed navbar so anchors clear it */
 }
 
 body {
@@ -31,6 +32,53 @@ body {
   font-family: 'Space Grotesk', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Skip navigation link ─────────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 8px;
+  z-index: 9999;
+  padding: 12px 24px;
+  background: #CBD5E1;
+  color: #0A1628;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #0A1628;
+  outline-offset: 2px;
+}
+
+/* Focus indicators ─────────────────────────────────────────────────────── */
+/* Visible keyboard-focus ring on every interactive element */
+:focus-visible {
+  outline: 3px solid #CBD5E1;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Pill-shaped buttons keep rounded outline */
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.btn-ghost:focus-visible {
+  outline: 3px solid #CBD5E1;
+  outline-offset: 4px;
+  border-radius: 9999px;
+}
+
+/* Links in nav / footer */
+a:focus-visible {
+  outline: 3px solid #CBD5E1;
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 /* Scrollbar */
@@ -231,4 +279,24 @@ body {
   border: 1px solid rgba(203, 213, 225, 0.08);
   border-radius: 10px;
   pointer-events: none;
+}
+
+/* Reduced motion ────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Hide the SVG animated flight-path dot */
+  .trajectory-motion-dot {
+    display: none;
+  }
 }
