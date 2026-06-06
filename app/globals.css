@@ -23,6 +23,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 72px; /* height of fixed navbar so anchors clear it */
 }
 
 body {
@@ -31,6 +32,53 @@ body {
   font-family: 'Space Grotesk', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Skip navigation link ─────────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 8px;
+  z-index: 9999;
+  padding: 12px 24px;
+  background: #CBD5E1;
+  color: #0A1628;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #0A1628;
+  outline-offset: 2px;
+}
+
+/* Focus indicators ─────────────────────────────────────────────────────── */
+/* Visible keyboard-focus ring on every interactive element */
+:focus-visible {
+  outline: 3px solid #CBD5E1;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Pill-shaped buttons keep rounded outline */
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.btn-ghost:focus-visible {
+  outline: 3px solid #CBD5E1;
+  outline-offset: 4px;
+  border-radius: 9999px;
+}
+
+/* Links in nav / footer */
+a:focus-visible {
+  outline: 3px solid #CBD5E1;
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 /* Scrollbar */
@@ -214,6 +262,133 @@ body {
   background-size: 32px 32px;
 }
 
+/* ─── Loading Screen ─────────────────────────────────────────────────────── */
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #0A1628;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  will-change: opacity, transform;
+}
+
+/* Animated entrance elements */
+.loading-logo {
+  animation: vsLogoAppear 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.loading-text {
+  animation: vsSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.loading-subtitle {
+  animation: vsSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+}
+
+.loading-progress {
+  animation: vsSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+}
+
+.loading-divider {
+  animation: vsSlideUp 0.5s ease 0.7s both;
+}
+
+.loading-badge {
+  animation: vsSlideUp 0.5s ease 0.8s both;
+}
+
+.loading-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  animation: vsFadeIn 0.4s ease 0.1s both;
+}
+
+.loading-corner--tl {
+  top: 24px;
+  left: 24px;
+  border-top: 1px solid rgba(203, 213, 225, 0.3);
+  border-left: 1px solid rgba(203, 213, 225, 0.3);
+}
+
+.loading-corner--tr {
+  top: 24px;
+  right: 24px;
+  border-top: 1px solid rgba(203, 213, 225, 0.3);
+  border-right: 1px solid rgba(203, 213, 225, 0.3);
+}
+
+.loading-corner--bl {
+  bottom: 24px;
+  left: 24px;
+  border-bottom: 1px solid rgba(203, 213, 225, 0.3);
+  border-left: 1px solid rgba(203, 213, 225, 0.3);
+}
+
+.loading-corner--br {
+  bottom: 24px;
+  right: 24px;
+  border-bottom: 1px solid rgba(203, 213, 225, 0.3);
+  border-right: 1px solid rgba(203, 213, 225, 0.3);
+}
+
+/* Shimmer on progress bar */
+.loading-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(203, 213, 225, 0.5), transparent);
+}
+
+/* Horizontal scan line */
+.loading-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(203, 213, 225, 0.15) 40%, rgba(203, 213, 225, 0.25) 50%, rgba(203, 213, 225, 0.15) 60%, transparent 100%);
+  animation: vsScanLine 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes vsLogoAppear {
+  from { opacity: 0; transform: scale(0.82) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes vsSlideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes vsFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes vsScanLine {
+  0%   { transform: translateY(-100vh); }
+  100% { transform: translateY(100vh); }
+}
+
+/* ─── Page Transition ────────────────────────────────────────────────────── */
+
+.page-enter {
+  animation: pageEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Embedded brand asset presentation */
 .brand-showcase {
   position: relative;
@@ -231,4 +406,24 @@ body {
   border: 1px solid rgba(203, 213, 225, 0.08);
   border-radius: 10px;
   pointer-events: none;
+}
+
+/* Reduced motion ────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Hide the SVG animated flight-path dot */
+  .trajectory-motion-dot {
+    display: none;
+  }
 }
