@@ -21,6 +21,151 @@ import {
   Target,
   Navigation2,
 } from 'lucide-react'
+
+// ─── Brand Assets ────────────────────────────────────────────────────────────
+
+const brandAssets = {
+  emblem: '/assets/vector-shift-emblem.svg',
+  lockup: '/assets/vector-shift-lockup.svg',
+  collective: '/assets/collective-ai-mark.svg',
+  missionPanel: '/assets/drone-logistics-panel.svg',
+}
+
+function VectorShiftLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
+  const dimensions = {
+    sm: { width: 198, className: 'h-11' },
+    md: { width: 294, className: 'h-16' },
+    lg: { width: 420, className: 'h-24 md:h-28' },
+  }[size]
+
+  return (
+    <img
+      src={brandAssets.lockup}
+      alt="Vector Shift, a division of Collective AI Inc."
+      width={dimensions.width}
+      height={Math.round(dimensions.width / 4.55)}
+      className={`${dimensions.className} w-auto drop-shadow-[0_10px_24px_rgba(0,8,20,0.75)]`}
+    />
+  )
+}
+
+function CollectiveAILogo() {
+  return (
+    <img
+      src={brandAssets.collective}
+      alt="Collective AI Inc."
+      width={220}
+      height={63}
+      className="h-12 w-auto opacity-95"
+    />
+  )
+}
+
+// ─── Nav ────────────────────────────────────────────────────────────────────
+
+const navLinks = ['Overview', 'Missions', 'Fleet', 'Routes', 'Analytics']
+
+function Navbar() {
+  const [active, setActive] = useState('Overview')
+  const [scrolled, setScrolled] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileOpen(false)
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [])
+
+  return (
+    <nav
+      aria-label="Primary"
+      className={`fixed top-0 inset-x-0 z-50 nav-glass transition-shadow duration-300 ${scrolled ? 'shadow-lg shadow-black/40' : ''}`}
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-8 h-16 flex items-center justify-between">
+        <VectorShiftLogo size="sm" />
+
+        {/* Desktop links */}
+        <div className="hidden md:flex items-center gap-8" role="list">
+          {navLinks.map((link) => (
+            <button
+              key={link}
+              type="button"
+              role="listitem"
+              onClick={() => setActive(link)}
+              aria-pressed={active === link}
+              className={`relative text-sm font-medium transition-colors duration-200 pb-1 ${
+                active === link
+                  ? 'text-silver'
+                  : 'text-text-secondary hover:text-text-primary'
+              }`}
+            >
+              {link}
+              {active === link && (
+                <span className="absolute bottom-0 left-0 right-0 h-px bg-silver" aria-hidden="true" />
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="hidden md:flex items-center gap-3">
+          <button type="button" className="btn-ghost text-sm py-2 px-5">Sign In</button>
+          <button type="button" className="btn-secondary text-sm py-2 px-5">Request Access</button>
+        </div>
+
+        {/* Mobile hamburger */}
+        <button
+          type="button"
+          className="md:hidden p-2 text-text-secondary hover:text-silver"
+          aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
+          onClick={() => setMobileOpen((o) => !o)}
+        >
+          <div className="w-5 h-0.5 bg-current mb-1" aria-hidden="true" />
+          <div className="w-5 h-0.5 bg-current mb-1" aria-hidden="true" />
+          <div className={`h-0.5 bg-current transition-all duration-200 ${mobileOpen ? 'w-5' : 'w-3'}`} aria-hidden="true" />
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div
+          id="mobile-nav"
+          className="md:hidden bg-surface border-b border-border-dark py-4 px-6"
+        >
+          <div className="flex flex-col gap-1">
+            {navLinks.map((link) => (
+              <button
+                key={link}
+                type="button"
+                onClick={() => { setActive(link); setMobileOpen(false) }}
+                aria-pressed={active === link}
+                className={`text-left py-2.5 text-sm font-medium transition-colors ${
+                  active === link ? 'text-silver' : 'text-text-secondary hover:text-text-primary'
+                }`}
+              >
+                {link}
+              </button>
+            ))}
+          </div>
+          <div className="pt-4 mt-2 border-t border-border-dark flex flex-col gap-2">
+            <button type="button" className="btn-ghost text-sm py-2 px-5">Sign In</button>
+            <button type="button" className="btn-secondary text-sm py-2 px-5">Request Access</button>
+          </div>
+        </div>
+      )}
+    </nav>
+  )
+}
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
 
@@ -32,6 +177,8 @@ function TrajectoryArcs() {
       className="absolute inset-0 w-full h-full pointer-events-none"
       viewBox="0 0 1440 800"
       preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+      focusable="false"
     >
       {[150, 300, 450, 600, 750].map((y) => (
         <line key={y} x1="0" y1={y} x2="1440" y2={y} stroke="rgba(203,213,225,0.04)" strokeWidth="1" />
@@ -48,6 +195,8 @@ function TrajectoryArcs() {
           <circle cx={cx} cy={cy} r="8" stroke="rgba(203,213,225,0.08)" strokeWidth="1" fill="none" />
         </g>
       ))}
+      {/* Animated flight path dot — hidden when reduced-motion is preferred via CSS */}
+      <circle r="3" fill="#CBD5E1" opacity="0.6" className="trajectory-motion-dot">
       <circle r="3" fill="#CBD5E1" opacity="0.6">
         <animateMotion dur="8s" repeatCount="indefinite">
           <mpath xlinkHref="#flight-path" />
@@ -60,15 +209,84 @@ function TrajectoryArcs() {
 
 function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-void grid-dot-bg">
+    <section id="overview" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-void grid-dot-bg">
       <TrajectoryArcs />
+
+      {/* Radial glow — decorative */}
       <div
         className="absolute inset-0 pointer-events-none"
+        aria-hidden="true"
         style={{
           background:
             'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(203,213,225,0.04) 0%, transparent 70%)',
         }}
       />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 pt-28 pb-16">
+        <div className="mb-10 flex items-center justify-between gap-8 border-y border-silver/20 py-5">
+          <div className="hidden md:block">
+            <VectorShiftLogo size="md" />
+          </div>
+          <div className="font-mono text-xs md:text-sm uppercase tracking-[0.35em] text-silver-light">
+            Autonomous Logistics / Aerial Mobility
+          </div>
+          <div className="hidden md:block">
+            <CollectiveAILogo />
+          </div>
+        </div>
+
+        <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+          <div>
+            <div className="badge-vs mb-6">A Division of Collective AI Inc. ✦</div>
+
+            <h1 className="font-grotesk font-bold text-5xl md:text-7xl lg:text-8xl text-text-primary leading-[1.05] tracking-tight mb-6">
+              Move everything.
+              <br />
+              <span className="text-silver">Ground and sky.</span>
+            </h1>
+
+            <p className="text-text-secondary text-lg md:text-xl max-w-2xl leading-relaxed mb-10">
+              Autonomous logistics and aerial mobility platform built for scale,
+              resilience, and operational superiority. The production brand system,
+              Vector Shift lockup, Collective AI parent mark, and mission UI assets
+              are embedded directly in the app for Vercel deployment.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-start gap-4">
+              <button type="button" className="btn-primary text-base px-8 py-3 gap-2">
+                <Zap size={16} strokeWidth={1.5} aria-hidden="true" />
+                Launch Mission
+              </button>
+              <button type="button" className="btn-ghost text-base px-8 py-3 gap-2">
+                <Map size={16} strokeWidth={1.5} aria-hidden="true" />
+                View Fleet Routing
+              </button>
+            </div>
+          </div>
+
+          <div className="brand-showcase card-vs scanline p-5 md:p-7">
+            <div className="flex items-start justify-between gap-4 border-b border-silver/15 pb-4">
+              <div>
+                <div className="font-mono text-[11px] uppercase tracking-[0.28em] text-text-secondary">01 / Identity System</div>
+                <div className="mt-2 text-sm text-silver">Primary lockup + emblem treatment</div>
+              </div>
+              <CollectiveAILogo />
+            </div>
+            <div className="grid gap-5 pt-5 md:grid-cols-[0.9fr_1.1fr]">
+              <div className="rounded-card border border-silver/15 bg-black/10 p-4">
+                <img
+                  src={brandAssets.emblem}
+                  alt="Vector Shift eagle VS emblem"
+                  width={640}
+                  height={420}
+                  className="mx-auto h-48 w-full object-contain md:h-60"
+                />
+                <div className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary">Icon emphasis</div>
+              </div>
+              <div className="space-y-5">
+                <div className="rounded-card border border-silver/15 bg-[#071225]/80 p-4">
+                  <VectorShiftLogo size="lg" />
+                  <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-text-secondary">Wordmark treatment</div>
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 pt-24 pb-16">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 mb-8">
@@ -105,12 +323,37 @@ function Hero() {
                   {value}
                   <span className="text-sm text-text-secondary ml-1">{unit}</span>
                 </div>
-                <div className="text-text-secondary text-xs mt-1 tracking-wide uppercase">{label}</div>
+                <img
+                  src={brandAssets.missionPanel}
+                  alt="Vector Shift mission route dashboard asset"
+                  width={960}
+                  height={540}
+                  className="rounded-card border border-silver/15 shadow-2xl shadow-black/30"
+                />
               </div>
-            ))}
+            </div>
           </div>
         </div>
+
+        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-px bg-border-dark rounded-card overflow-hidden border border-border-dark">
+          {[
+            { label: 'Active Missions', value: '86', unit: '' },
+            { label: 'Deliveries Today', value: '1,248', unit: '' },
+            { label: 'Route Efficiency', value: '93.6', unit: '%' },
+            { label: 'Fleet Units Online', value: '214', unit: '' },
+          ].map(({ label, value, unit }) => (
+            <div key={label} className="bg-surface/60 px-6 py-5 text-center">
+              <div className="font-mono text-2xl font-semibold text-silver">
+                {value}
+                <span className="text-sm text-text-secondary ml-1">{unit}</span>
+              </div>
+              <div className="text-text-secondary text-xs mt-1 tracking-wide uppercase">{label}</div>
+            </div>
+          ))}
+        </div>
       </div>
+
+      <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-void to-transparent pointer-events-none" aria-hidden="true" />
       <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-void to-transparent pointer-events-none" />
     </section>
   )
@@ -144,7 +387,7 @@ function MetricCard({
     <div className="card-vs p-6 flex flex-col justify-between gap-4 min-h-[120px]">
       <div className="flex items-start justify-between">
         <span className="text-text-secondary text-xs uppercase tracking-widest">{label}</span>
-        <Icon size={16} strokeWidth={1.5} className="text-text-secondary" />
+        <Icon size={16} strokeWidth={1.5} className="text-text-secondary" aria-hidden="true" />
       </div>
       <div>
         <div className="flex items-end gap-1">
@@ -153,7 +396,7 @@ function MetricCard({
         </div>
         {delta && (
           <div className="flex items-center gap-1 mt-1">
-            <TrendingUp size={12} strokeWidth={1.5} className="text-silver" />
+            <TrendingUp size={12} strokeWidth={1.5} className="text-silver" aria-hidden="true" />
             <span className="text-silver text-xs font-mono">{delta}</span>
           </div>
         )}
@@ -171,6 +414,21 @@ function SparkLine({ points }: { points: number[] }) {
     .map((p, i) => `${(i / (points.length - 1)) * w},${h - ((p - min) / range) * h}`)
     .join(' ')
   return (
+    <svg width={w} height={h} className="overflow-visible" aria-hidden="true" focusable="false">
+      <polyline
+        points={coords}
+        fill="none"
+        stroke="rgba(203,213,225,0.5)"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle
+        cx={(points.length - 1) / (points.length - 1) * w}
+        cy={h - ((points[points.length - 1] - min) / range) * h}
+        r="3"
+        fill="#CBD5E1"
+      />
     <svg width={w} height={h} className="overflow-visible">
       <polyline points={coords} fill="none" stroke="rgba(203,213,225,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       <circle cx={(points.length - 1) / (points.length - 1) * w} cy={h - ((points[points.length - 1] - min) / range) * h} r="3" fill="#CBD5E1" />
@@ -195,14 +453,17 @@ function LiveTelemetry() {
   }, [])
 
   return (
-    <section className="py-24 bg-void">
+    <section id="missions" className="py-24 bg-void" aria-labelledby="dispatch-heading">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
         <div className="flex items-center justify-between mb-10">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <div className="pulse-dot" />
+              <div className="pulse-dot" aria-hidden="true" />
               <span className="font-mono text-xs text-text-secondary tracking-widest uppercase">Live Telemetry</span>
             </div>
+            <h2 id="dispatch-heading" className="font-grotesk font-bold text-3xl md:text-4xl text-text-primary">
+              Dispatch Console
+            </h2>
             <h2 className="font-grotesk font-bold text-3xl md:text-4xl text-text-primary">Dispatch Console</h2>
           </div>
           <span className="badge-vs hidden md:inline-flex">
@@ -214,15 +475,26 @@ function LiveTelemetry() {
           <div className="card-vs p-6 flex flex-col justify-between gap-4 min-h-[120px]">
             <div className="flex items-start justify-between">
               <span className="text-text-secondary text-xs uppercase tracking-widest">Active Missions</span>
-              <Activity size={16} strokeWidth={1.5} className="text-text-secondary" />
+              <Activity size={16} strokeWidth={1.5} className="text-text-secondary" aria-hidden="true" />
             </div>
             <div>
               <div className="flex items-end justify-between">
+                <div>
+                  {/* aria-live so screen readers announce updates */}
+                  <span
+                    className="font-mono text-3xl font-semibold text-text-primary"
+                    aria-live="polite"
+                    aria-atomic="true"
+                    aria-label={`${activeMissions} active missions`}
+                  >
+                    {activeMissions}
+                  </span>
+                </div>
                 <span className="font-mono text-3xl font-semibold text-text-primary">{activeMissions}</span>
                 <SparkLine points={historyRef.current} />
               </div>
               <div className="flex items-center gap-1 mt-1">
-                <TrendingUp size={12} strokeWidth={1.5} className="text-silver" />
+                <TrendingUp size={12} strokeWidth={1.5} className="text-silver" aria-hidden="true" />
                 <span className="text-silver text-xs font-mono">+3 last hour</span>
               </div>
             </div>
@@ -236,16 +508,28 @@ function LiveTelemetry() {
           <div className="lg:col-span-2 bg-surface border border-border-dark rounded-card overflow-hidden">
             <div className="flex items-center justify-between px-6 py-4 border-b border-border-dark">
               <div className="flex items-center gap-2">
-                <Radio size={14} strokeWidth={1.5} className="text-silver" />
+                <Radio size={14} strokeWidth={1.5} className="text-silver" aria-hidden="true" />
                 <span className="font-grotesk font-semibold text-sm text-text-primary">Mission Feed</span>
               </div>
-              <span className="font-mono text-xs text-text-secondary">{new Date().toUTCString().slice(0, 25)} UTC</span>
+              <span className="font-mono text-xs text-text-secondary" aria-label={`Last updated: ${new Date().toUTCString().slice(0, 25)} UTC`}>
+                {new Date().toUTCString().slice(0, 25)} UTC
+              </span>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full" aria-label="Active mission feed">
+                <caption className="sr-only">
+                  Active fleet missions showing unit ID, route, status, altitude, estimated time of arrival, and cargo weight.
+                </caption>
                 <thead>
                   <tr className="border-b border-border-dark">
                     {['Unit ID', 'Route', 'Status', 'Alt', 'ETA', 'Cargo'].map((h) => (
+                      <th
+                        key={h}
+                        scope="col"
+                        className="px-4 py-3 text-left font-mono text-[10px] text-text-secondary uppercase tracking-widest font-medium"
+                      >
+                        {h}
+                      </th>
                       <th key={h} className="px-4 py-3 text-left font-mono text-[10px] text-text-secondary uppercase tracking-widest font-medium">{h}</th>
                     ))}
                   </tr>
@@ -269,10 +553,10 @@ function LiveTelemetry() {
           <div className="flex flex-col gap-4">
             <div className="card-vs p-6 flex-1">
               <div className="flex items-center gap-2 mb-5">
-                <Globe size={14} strokeWidth={1.5} className="text-silver" />
+                <Globe size={14} strokeWidth={1.5} className="text-silver" aria-hidden="true" />
                 <span className="font-grotesk font-semibold text-sm text-text-primary">System Status</span>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-3" role="list" aria-label="System component statuses">
                 {[
                   { sys: 'Navigation Core', ok: true },
                   { sys: 'Weather Intel', ok: true },
@@ -281,8 +565,17 @@ function LiveTelemetry() {
                   { sys: 'Ground Uplink', ok: true },
                   { sys: 'Airspace Auth.', ok: false },
                 ].map(({ sys, ok }) => (
-                  <div key={sys} className="flex items-center justify-between">
+                  <div key={sys} className="flex items-center justify-between" role="listitem">
                     <span className="text-xs text-text-secondary">{sys}</span>
+                    <div className="flex items-center gap-1.5" aria-label={`${sys}: ${ok ? 'Nominal' : 'Needs review'}`}>
+                      {ok ? (
+                        <CheckCircle2 size={12} strokeWidth={1.5} className="text-silver" aria-hidden="true" />
+                      ) : (
+                        <AlertCircle size={12} strokeWidth={1.5} className="text-text-secondary" aria-hidden="true" />
+                      )}
+                      <span className={`font-mono text-[10px] ${ok ? 'text-silver' : 'text-text-secondary'}`} aria-hidden="true">
+                        {ok ? 'NOMINAL' : 'REVIEW'}
+                      </span>
                     <div className="flex items-center gap-1.5">
                       {ok ? <CheckCircle2 size={12} strokeWidth={1.5} className="text-silver" /> : <AlertCircle size={12} strokeWidth={1.5} className="text-text-secondary" />}
                       <span className={`font-mono text-[10px] ${ok ? 'text-silver' : 'text-text-secondary'}`}>{ok ? 'NOMINAL' : 'REVIEW'}</span>
@@ -293,7 +586,7 @@ function LiveTelemetry() {
             </div>
             <div className="card-vs p-6">
               <div className="flex items-center gap-2 mb-4">
-                <Clock size={14} strokeWidth={1.5} className="text-silver" />
+                <Clock size={14} strokeWidth={1.5} className="text-silver" aria-hidden="true" />
                 <span className="font-grotesk font-semibold text-sm text-text-primary">Avg. Delivery Time</span>
               </div>
               <div className="font-mono text-4xl font-semibold text-text-primary">
@@ -359,8 +652,14 @@ function CapabilityCard({ cap }: { cap: (typeof capabilities)[0] }) {
     <div className="card-vs p-8 flex flex-col gap-6 group hover:border-silver/40 transition-colors duration-300">
       <div className="flex items-start justify-between">
         <div className="p-3 rounded-card bg-void border border-border-dark group-hover:border-silver/30 transition-colors">
-          <Icon size={24} strokeWidth={1.5} className="text-silver" />
+          <Icon size={24} strokeWidth={1.5} className="text-silver" aria-hidden="true" />
         </div>
+        <ArrowUpRight
+          size={16}
+          strokeWidth={1.5}
+          className="text-text-secondary group-hover:text-silver transition-colors"
+          aria-hidden="true"
+        />
         <ArrowUpRight size={16} strokeWidth={1.5} className="text-text-secondary group-hover:text-silver transition-colors" />
       </div>
       <div>
@@ -387,10 +686,22 @@ function CapabilityCard({ cap }: { cap: (typeof capabilities)[0] }) {
 
 function Capabilities() {
   return (
-    <section className="py-24 bg-surface/30">
+    <section id="fleet" className="py-24 bg-surface/30" aria-labelledby="capabilities-heading">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
         <div className="flex items-end justify-between mb-12">
           <div>
+            <div className="font-mono text-xs text-text-secondary tracking-widest uppercase mb-3">
+              Core Capabilities
+            </div>
+            <h2 id="capabilities-heading" className="font-grotesk font-bold text-3xl md:text-4xl text-text-primary">
+              The Ecosystem.
+              <br />
+              <span className="text-silver">Ground. Sky. Intelligence.</span>
+            </h2>
+          </div>
+          <button type="button" className="hidden md:flex items-center gap-2 btn-ghost text-sm">
+            Full Platform Docs
+            <ChevronRight size={14} strokeWidth={1.5} aria-hidden="true" />
             <div className="font-mono text-xs text-text-secondary tracking-widest uppercase mb-3">Core Capabilities</div>
             <h2 className="font-grotesk font-bold text-3xl md:text-4xl text-text-primary">
               The Ecosystem.<br /><span className="text-silver">Ground. Sky. Intelligence.</span>
@@ -415,11 +726,15 @@ function MissionMetrics() {
   const months = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
 
   return (
-    <section className="py-24 bg-void">
+    <section id="routes" className="py-24 bg-void" aria-labelledby="metrics-heading">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
           <div className="lg:col-span-2 flex flex-col gap-6">
             <div>
+              <div className="font-mono text-xs text-text-secondary tracking-widest uppercase mb-3">
+                Operational Record
+              </div>
+              <h2 id="metrics-heading" className="font-grotesk font-bold text-3xl md:text-4xl text-text-primary mb-4">
               <div className="font-mono text-xs text-text-secondary tracking-widest uppercase mb-3">Operational Record</div>
               <h2 className="font-grotesk font-bold text-3xl md:text-4xl text-text-primary mb-4">
                 Scale without<br />compromise.
@@ -451,6 +766,34 @@ function MissionMetrics() {
               </div>
               <span className="badge-vs">12-Month Trend</span>
             </div>
+            {/* Bar chart — screen-reader summary provided below */}
+            <div
+              role="img"
+              aria-label="Route efficiency over 12 months: Jul 65%, Aug 72%, Sep 68%, Oct 80%, Nov 85%, Dec 78%, Jan 90%, Feb 88%, Mar 93%, Apr 91%, May 94%, Jun 94%"
+            >
+              <p className="sr-only">
+                Route efficiency bar chart showing a 12-month upward trend.
+                July: 65%. August: 72%. September: 68%. October: 80%. November: 85%.
+                December: 78%. January: 90%. February: 88%. March: 93%. April: 91%.
+                May: 94%. June: 94%.
+              </p>
+              <div className="flex items-end gap-2 h-40" aria-hidden="true">
+                {bars.map((val, i) => (
+                  <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                    <div
+                      className="w-full rounded-sm transition-all duration-500"
+                      style={{
+                        height: `${val}%`,
+                        background:
+                          i === bars.length - 1
+                            ? '#CBD5E1'
+                            : `rgba(203,213,225,${0.15 + (val / 100) * 0.25})`,
+                      }}
+                    />
+                    <span className="font-mono text-[9px] text-text-secondary">{months[i]}</span>
+                  </div>
+                ))}
+              </div>
             <div className="flex items-end gap-2 h-40">
               {bars.map((val, i) => (
                 <div key={i} className="flex-1 flex flex-col items-center gap-1">
@@ -469,7 +812,7 @@ function MissionMetrics() {
         </div>
 
         <div className="mt-6 flex items-center gap-4 p-4 rounded-card border border-border-dark bg-input-bg/40">
-          <Shield size={16} strokeWidth={1.5} className="text-silver shrink-0" />
+          <Shield size={16} strokeWidth={1.5} className="text-silver shrink-0" aria-hidden="true" />
           <p className="text-text-secondary text-sm">
             <span className="text-silver font-medium">Aegis-Hold Safety Gate</span> — All physical autonomy operations are gated through the Aegis-Hold safety system, enforcing pre-flight validation, geofencing compliance, and real-time kill-switch authority across the entire fleet.
           </p>
@@ -492,7 +835,7 @@ function TechStack() {
   ]
 
   return (
-    <section className="py-24 bg-surface/20 border-y border-border-dark">
+    <section id="analytics" className="py-24 bg-surface/20 border-y border-border-dark" aria-labelledby="tech-heading">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
         <div className="text-center mb-12">
           <div className="font-mono text-xs text-text-secondary tracking-widest uppercase mb-3">Platform Architecture</div>
@@ -502,7 +845,7 @@ function TechStack() {
           {stack.map(({ label, items }) => (
             <div key={label} className="bg-input-bg border border-border-dark rounded-card p-5">
               <div className="flex items-center gap-1.5 mb-4">
-                <Cpu size={12} strokeWidth={1.5} className="text-silver" />
+                <Cpu size={12} strokeWidth={1.5} className="text-silver" aria-hidden="true" />
                 <span className="font-mono text-[10px] text-silver uppercase tracking-widest">{label}</span>
               </div>
               <div className="space-y-2">
@@ -527,6 +870,14 @@ function CTABanner() {
         className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 60% 80% at 50% 50%, rgba(203,213,225,0.05) 0%, transparent 70%)' }}
       />
+      {/* Diagonal arc — decorative */}
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        viewBox="0 0 1440 400"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden="true"
+        focusable="false"
+      >
       <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1440 400" preserveAspectRatio="xMidYMid slice">
         <path d="M-100 350 Q400 50 900 200 Q1200 300 1600 80" className="trajectory-arc" />
         <path d="M-100 300 Q500 0 1000 180 Q1300 320 1600 100" className="trajectory-arc" strokeOpacity="0.06" />
@@ -540,6 +891,12 @@ function CTABanner() {
           Deploy ground and aerial fleets from a single dispatch console. Built for operators who demand certainty.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button type="button" className="btn-secondary text-base px-10 py-3">
+            Request Demo Access
+          </button>
+          <button type="button" className="btn-primary text-base px-10 py-3">
+            View Documentation
+          </button>
           <button className="btn-secondary text-base px-10 py-3">Request Demo Access</button>
           <button className="btn-primary text-base px-10 py-3">View Documentation</button>
         </div>
@@ -548,19 +905,108 @@ function CTABanner() {
   )
 }
 
+// ─── Footer ──────────────────────────────────────────────────────────────────
+
+function Footer() {
+  const cols = [
+    {
+      heading: 'Platform',
+      links: ['Ground Vector Fleet', 'Sky Vector Aerial', 'Route Intelligence', 'Analytics Dashboard', 'API Reference'],
+    },
+    {
+      heading: 'Compliance',
+      links: ['FAA Part 135 Cert.', 'BVLOS Authorization', 'Safety Gate (Aegis)', 'Privacy Policy', 'Terms of Use'],
+    },
+    {
+      heading: 'Company',
+      links: ['About Vector Shift', 'Collective AI Inc.', 'Careers', 'Press Kit', 'Contact'],
+    },
+  ]
+
+  return (
+    <footer className="bg-input-bg border-t border-border-dark">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 py-16">
+        {/* Top */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          {/* Brand */}
+          <div className="md:col-span-1">
+            <VectorShiftLogo size="sm" />
+            <p className="text-text-secondary text-sm mt-4 leading-relaxed max-w-xs">
+              Autonomous logistics and aerial mobility platform. Built for
+              operational superiority.
+            </p>
+            <div className="flex items-center gap-3 mt-6">
+              <div className="pulse-dot scale-75" aria-hidden="true" />
+              <span className="font-mono text-xs text-text-secondary">All systems nominal</span>
+            </div>
+          </div>
+
+          {/* Link cols */}
+          {cols.map(({ heading, links }) => (
+            <nav key={heading} aria-label={`${heading} links`}>
+              <div className="font-mono text-[10px] text-text-secondary uppercase tracking-widest mb-4" aria-hidden="true">
+                {heading}
+              </div>
+              <ul className="space-y-3">
+                {links.map((link) => (
+                  <li key={link}>
+                    <a
+                      href="#"
+                      className="text-sm text-text-secondary hover:text-silver transition-colors duration-200"
+                    >
+                      {link}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+        </div>
+
+        {/* Divider */}
+        <div className="border-t border-border-dark pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-silver text-sm font-semibold">Vector Shift</span>
+              <span className="text-text-secondary text-sm">✦ A Division of Collective AI Inc.</span>
+            </div>
+            <p className="font-mono text-[11px] text-text-secondary leading-relaxed">
+              All physical autonomy operates under the Aegis-Hold safety gate.
+            </p>
+          </div>
+          <div className="text-right">
+            <div className="font-mono text-[10px] text-text-secondary">
+              VS-SITE-<span>v2.4.1</span>
+            </div>
+            <p className="font-mono text-[10px] text-text-secondary mt-0.5">
+              © {new Date().getFullYear()} Collective AI Inc. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function VectorShiftPage() {
   return (
-    <main className="min-h-screen bg-void">
-      <Navbar />
-      <Hero />
-      <LiveTelemetry />
-      <Capabilities />
-      <MissionMetrics />
-      <TechStack />
-      <CTABanner />
-      <Footer />
-    </main>
+    <>
+      {/* Skip navigation — first focusable element on the page */}
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      <main id="main-content" className="min-h-screen bg-void">
+        <Navbar />
+        <Hero />
+        <LiveTelemetry />
+        <Capabilities />
+        <MissionMetrics />
+        <TechStack />
+        <CTABanner />
+        <Footer />
+      </main>
+    </>
   )
 }
